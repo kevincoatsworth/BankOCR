@@ -35,26 +35,58 @@ object BankOCR extends App {
       " _|" -> 9
     )
 
-    def isMultipleOfNine(int: Int): Boolean = int % 9 == 0
+    println(string.length)
 
-    //Make list of multiples of 9
-    val multiples = List(1 to 90 by 9)
+    val numbers = string.length match {
 
-    val numbers = if (multiples.contains(string.length)) {
-      string.length
-    } else {
-      throw new IllegalArgumentException
+      case 9 => 1
+      case 18 => 2
+      case 27 => 3
+      case 36 => 4
+      case 45 => 5
+      case 54 => 6
+      case 63 => 7
+      case 72 => 8
+      case 81 => 9
+      case _ => throw new IllegalArgumentException
     }
+    println(numbers)
+
     val reg = ".{3}".r
     val split = reg.findAllIn(string).toList
     val stringList = split.grouped(numbers).toList.transpose
     val strings = stringList.map(s => s.mkString)
     val check = strings.map(s => numMap(s)).mkString.toInt
 
-    println(check)
     check
   }
-  numberChecker("    _ " +
-    "|_||_|" +
-    "  ||_|" )
+  numberChecker("    _ "+
+                "  | _|"+
+                "  ||_ ")
 }
+
+
+
+
+
+
+
+
+//def isMultipleOfNine(int: Int): Boolean = int % 9 == 0
+
+//Make list of multiples of 9
+//    val multiples = List(1 to 90 by 9)
+//
+//    val numbers = if (multiples.contains(string.length)) {
+//      string.length
+//    } else {
+//      throw new IllegalArgumentException
+//    }
+//    val reg = ".{3}".r
+//    val split = reg.findAllIn(string).toList
+//    val stringList = split.grouped(numbers).toList.transpose
+//    val strings = stringList.map(s => s.mkString)
+//    val check = strings.map(s => numMap(s)).mkString.toInt
+//
+//    println(check)
+//    check
