@@ -1,70 +1,61 @@
 object BankOCR extends App {
 
-  def numberChecker(string: String): Int = {
+  def numberChecker(string: String): String = {
 
     val numMap = Map (
       " _ " +
       "| |" +
-      "|_|" -> 0,
+      "|_|" -> "0",
       "   " +
       "  |" +
-      "  |" -> 1,
+      "  |" -> "1",
       " _ " +
       " _|" +
-      "|_ " -> 2,
+      "|_ " -> "2",
       " _ " +
       " _|" +
-      " _|" -> 3,
+      " _|" -> "3",
       "   " +
       "|_|" +
-      "  |" -> 4,
+      "  |" -> "4",
       " _ " +
       "|_ " +
-      " _|" -> 5,
+      " _|" -> "5",
       " _ " +
       "|_ " +
-      "|_|" -> 6,
+      "|_|" -> "6",
       " _ " +
       "  |" +
-      "  |" -> 7,
+      "  |" -> "7",
       " _ " +
       "|_|" +
-      "|_|" -> 8,
+      "|_|" -> "8",
       " _ " +
       "|_|" +
-      " _|" -> 9
+      " _|" -> "9"
     )
 
     println(string.length)
 
-    val numbers = string.length match {
+   val numbers = string.length match {
 
-      case 9 => 1
-      case 18 => 2
-      case 27 => 3
-      case 36 => 4
-      case 45 => 5
-      case 54 => 6
-      case 63 => 7
-      case 72 => 8
-      case 81 => 9
+      case x if x % 9 == 0 => string.length/9
       case _ => throw new IllegalArgumentException
     }
-    println(numbers)
 
     val reg = ".{3}".r
     val split = reg.findAllIn(string).toList
     val stringList = split.grouped(numbers).toList.transpose
     val strings = stringList.map(s => s.mkString)
-    val check = strings.map(s => numMap(s)).mkString.toInt
+    val reverseNumber = strings.map(s => numMap(s)).reverse
+    val check = strings.map(s => numMap(s)).mkString
 
     check
   }
-  numberChecker("    _ "+
-                "  | _|"+
-                "  ||_ ")
+  numberChecker(" _     _  _  _  _  _  _  _ " +
+                " _||_||_ |_||_| _||_||_ |_ " +
+                " _|  | _||_||_||_ |_||_| _|")
 }
-
 
 
 
