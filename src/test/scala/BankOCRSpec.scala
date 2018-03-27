@@ -40,5 +40,10 @@ class BankOCRSpec extends WordSpec with MustMatchers {
                             "  ||_  _|  | _||_|  ||_| _|" ) mustEqual "123456789"
     }
 
+    "return true if 9 digit account number is modulos of 11" in {
+
+
+    }
+
   }
 }
