@@ -40,10 +40,17 @@ class BankOCRSpec extends WordSpec with MustMatchers {
                             "  ||_  _|  | _||_|  ||_| _|" ) mustEqual "123456789"
     }
 
-    "return true if 9 digit account number is modulos of 11" in {
+    "return true if 9 digit account number is mod of 11" in {
 
+      BankOCR.checkSum("3,4,5,8,8,2,8,6,5") mustEqual true
 
     }
 
-  }
+    "return false if 9 digit account number is not mod of 11" in {
+
+      BankOCR
+      .checkSum("3, 4, 5, 0, 8, 2, 8, 6, 5") mustEqual false
+    }
+
+    }
 }
