@@ -56,21 +56,21 @@ class BankOCRSpec extends WordSpec with MustMatchers {
         .numberChecker(num)
       }
 
-    }
-    "return list if 9 digit account number is modulos of 11" in {
-      BankOCR
-      .checkSum(List("3", "4", "5", "8", "8", "2", "8", "6", "5")) mustEqual "345882865"
+      "return list if 9 digit account number is modulos of 11" in {
+        BankOCR
+        .checkSum(List("3", "4", "5", "8", "8", "2", "8", "6", "5")) mustEqual "345882865"
 
-    }
+      }
 
-    "return list with ILL indicator if account number has illegible characters" in {
-      BankOCR.checkSum(List("3", "4", "5", "8", "8", "2", "8", "?", "5")) mustEqual "3458828?5 ILL"
-    }
+      "return list with ILL indicator if account number has illegible characters" in {
+        BankOCR
+        .checkSum(List("3", "4", "5", "8", "8", "2", "8", "?", "5")) mustEqual "3458828?5 ILL"
+      }
 
-    "return list with ERR indicator if 9 digit account number not modulos of 11" in {
-      BankOCR
-      .checkSum(List("3", "4", "5", "8", "8", "2", "8", "6", "6")) mustEqual "345882866 ERR"
+      "return list with ERR indicator if 9 digit account number not modulos of 11" in {
+        BankOCR
+        .checkSum(List("3", "4", "5", "8", "8", "2", "8", "6", "6")) mustEqual "345882866 ERR"
 
+      }
     }
-  }
 }
