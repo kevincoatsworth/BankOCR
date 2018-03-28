@@ -74,9 +74,7 @@ object BankOCR extends App {
                           .reverse
       val reverseListWithIndex = reverseNumber
                                  .zipWithIndex
-                                 .map(x => x
-                                           ._1 * (x
-                                                  ._2 + 1))
+                                 .map(x => x._1 * (x._2 + 1))
                                  .sum
       val mod = reverseListWithIndex % 11 == 0
 
