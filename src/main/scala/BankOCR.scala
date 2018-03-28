@@ -1,3 +1,5 @@
+import scala.util.{Failure, Success, Try}
+
 object BankOCR extends App {
 
   def numberChecker(string: String): List[String] = {
@@ -42,77 +44,60 @@ object BankOCR extends App {
       case _ => throw new IllegalArgumentException
     }
 
-    val regex = ".{3}"
-      .r
-    val split = regex
-                .findAllIn(string)
-                .toList
-    val stringList = split
-                     .grouped(numbers)
-                     .toList
-                     .transpose
-    val strings = stringList
-                  .map(s => s
-                            .mkString)
-    val check = strings
-                .map(s => numMap(s))
+    val regex = ".{3}".r
 
+    val split = regex.findAllIn(string).toList
 
+    val stringList = split.grouped(numbers).toList.transpose
+
+    val strings = stringList.map(s => s.mkString)
+
+    val check = strings.map(s => {
+      Try(numMap(s)) match {
+        case Success(c) => c
+        case Failure(_) => "?"
+      }
+    })
     println(check)
     check
-
   }
 
-  def checkSum(resultOfChecker : List[String]): Boolean = {
+  def checkSum(resultOfChecker : List[String]): String = {
 
-    val reverseNumber = resultOfChecker.map(x => x.toInt).reverse
-    
+    if (resultOfChecker.contains("?")) {
+         resultOfChecker.mkString.concat(" ILL")
+       } else {
 
-    val reverseListWithIndex = reverseNumber.zipWithIndex.map(x => x._1*(x._2 + 1)).sum
-    val mod = reverseListWithIndex % 11 == 0
+      val reverseNumber = resultOfChecker
+                          .map(x => x
+                                    .toInt)
+                          .reverse
+      val reverseListWithIndex = reverseNumber
+                                 .zipWithIndex
+                                 .map(x => x
+                                           ._1 * (x
+                                                  ._2 + 1))
+                                 .sum
+      val mod = reverseListWithIndex % 11 == 0
 
-    println(reverseListWithIndex)
-
-    println(mod)
-
-    mod
-
+      if (mod) {
+        resultOfChecker
+        .mkString
+      } else {
+        resultOfChecker
+        .mkString
+        .concat(" ERR")
+      }
+    }
   }
-
   def start(){
 
     val numCheck = numberChecker(" _     _  _  _  _  _  _  _ " +
                                  " _||_||_ |_||_| _||_||_ |_ " +
-                                 " _|  | _||_||_||_ |_||_| _|")
+                                 " _|  | _||_||_||_ |_||_? _|")
 
     checkSum(numCheck)
-
   }
   start()
-
 }
 
-
-
-
-
-
-
-//def isMultipleOfNine(int: Int): Boolean = int % 9 == 0
-
-//Make list of multiples of 9
-//    val multiples = List(1 to 90 by 9)
-//
-//    val numbers = if (multiples.contains(string.length)) {
-//      string.length
-//    } else {
-//      throw new IllegalArgumentException
-//    }
-//    val reg = ".{3}".r
-//    val split = reg.findAllIn(string).toList
-//    val stringList = split.grouped(numbers).toList.transpose
-//    val strings = stringList.map(s => s.mkString)
-//    val check = strings.map(s => numMap(s)).mkString.toInt
-//
-//    println(check)
-//    check
