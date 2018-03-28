@@ -1,38 +1,39 @@
 object BankOCR extends App {
 
-  val numMap = Map(
-    " _ " +
-    "| |" +
-    "|_|" -> 0,
-    "   " +
-    "  |" +
-    "  |" -> 1,
-    " _ " +
-    " _|" +
-    "|_ " -> 2,
-    " _ " +
-    " _|" +
-    " _|" -> 3,
-    "   " +
-    "|_|" +
-    "  |" -> 4,
-    " _ " +
-    "|_ " +
-    " _|" -> 5,
-    " _ " +
-    "|_ " +
-    "|_|" -> 6,
-    " _ " +
-    "  |" +
-    "  |" -> 7,
-    " _ " +
-    "|_|" +
-    "|_|" -> 8,
-    " _ " +
-    "|_|" +
-    " _|" -> 9
-  )
-  def numberChecker(string: String): List[Int] = {
+  def numberChecker(string: String): List[String] = {
+
+    val numMap = Map(
+      " _ " +
+      "| |" +
+      "|_|" -> "0",
+      "   " +
+      "  |" +
+      "  |" -> "1",
+      " _ " +
+      " _|" +
+      "|_ " -> "2",
+      " _ " +
+      " _|" +
+      " _|" -> "3",
+      "   " +
+      "|_|" +
+      "  |" -> "4",
+      " _ " +
+      "|_ " +
+      " _|" -> "5",
+      " _ " +
+      "|_ " +
+      "|_|" -> "6",
+      " _ " +
+      "  |" +
+      "  |" -> "7",
+      " _ " +
+      "|_|" +
+      "|_|" -> "8",
+      " _ " +
+      "|_|" +
+      " _|" -> "9"
+    )
 
     val numbers = string
                   .length match {
@@ -62,18 +63,20 @@ object BankOCR extends App {
 
   }
 
-  def checkSum(resultOfChecker : List[Int]): Boolean = {
+  def checkSum(resultOfChecker : List[String]): Boolean = {
 
-    val reverseNumber = resultOfChecker.reverse
-
+    val reverseNumber = resultOfChecker.map(x => x.toInt).reverse
+    
 
     val reverseListWithIndex = reverseNumber.zipWithIndex.map(x => x._1*(x._2 + 1)).sum
-    val mod =reverseListWithIndex % 11 == 0
+    val mod = reverseListWithIndex % 11 == 0
 
+    println(reverseListWithIndex)
 
     println(mod)
 
     mod
+
   }
 
   def start(){
