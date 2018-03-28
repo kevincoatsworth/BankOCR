@@ -65,7 +65,7 @@ object BankOCR extends App {
   def checkSum(resultOfChecker : List[String]): String = {
 
     if (resultOfChecker.contains("?")) {
-         resultOfChecker.mkString.concat(" bear")
+         resultOfChecker.mkString.concat(" ILL")
        } else {
 
       val reverseNumber = resultOfChecker
