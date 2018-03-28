@@ -45,16 +45,12 @@ object BankOCR extends App {
     }
 
     val regex = ".{3}".r
-
     val split = regex.findAllIn(string).toList
-
     val stringList = split.grouped(numbers).toList.transpose
-
     val strings = stringList.map(s => s.mkString)
-
     val check = strings.map(s => {
       Try(numMap(s)) match {
-        case Success(c) => c
+        case Success(char) => char
         case Failure(_) => "?"
       }
     })
@@ -69,8 +65,7 @@ object BankOCR extends App {
     } else {
 
       val reverseNumber = resultOfChecker
-                          .map(x => x
-                                    .toInt)
+                          .map(x => x.toInt)
                           .reverse
       val reverseListWithIndex = reverseNumber
                                  .zipWithIndex
@@ -79,22 +74,17 @@ object BankOCR extends App {
       val mod = reverseListWithIndex % 11 == 0
 
       mod match {
-        case true => resultOfChecker
-                     .mkString
-        case false => resultOfChecker
-                      .mkString
-                      .concat(" ERR")
+        case true => resultOfChecker.mkString
+        case false => resultOfChecker.mkString.concat(" ERR")
       }
     }
   }
-  def start(){
-
-    val numCheck = numberChecker(" _     _  _  _  _  _  _  _ " +
-                                 " _||_||_ |_||_| _||_||_ |_ " +
-                                 " _|  | _||_||_||_ |_||_? _|")
-
-    checkSum(numCheck)
-  }
-  start()
+//  def start(){
+//    val numCheck = numberChecker(" _     _  _  _  _  _  _  _ " +
+//                                 " _||_||_ |_||_| _||_||_ |_ " +
+//                                 " _|  | _||_||_||_ |_||_? _|")
+//    checkSum(numCheck)
+//  }
+//  start()
 }
 
