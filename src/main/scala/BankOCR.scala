@@ -81,11 +81,10 @@ object BankOCR extends App {
   }
 
   def start(){
-
-    val numCheck = numberChecker(" _     _  _  _  _  _  _  _ " +
+    val input = numberChecker(" _     _  _  _  _  _  _  _ " +
                                  " _||_||_ |_||_| _||_||_ |_ " +
                                  " _|  | _||_||_||_ |_||_| _|")
-    checkSum(numCheck)
+    checkSum(input)
   }
   start()
 
