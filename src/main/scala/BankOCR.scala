@@ -32,6 +32,7 @@ object BankOCR extends App {
     "|_|" +
     " _|" -> 9
   )
+
   def numberChecker(string: String): List[Int] = {
 
     val numbers = string
@@ -39,41 +40,44 @@ object BankOCR extends App {
       case x if x % 9 == 0 => string
                               .length / 9
       case _ => throw new IllegalArgumentException
+
     }
 
     val regex = ".{3}"
       .r
-    val split = regex
+
+    val splitCells = regex
                 .findAllIn(string)
                 .toList
-    val stringList = split
+
+    val splitCellsToList = splitCells
                      .grouped(numbers)
                      .toList
                      .transpose
-    val strings = stringList
+
+    val groupedCellStrings = splitCellsToList
                   .map(s => s
                             .mkString)
-    val check = strings
+
+    val compareWithMap = groupedCellStrings
                 .map(s => numMap(s))
 
-
-    println(check)
-    check
+    println(splitCells)
+    println(splitCellsToList)
+    println(groupedCellStrings)
+    println(compareWithMap)
+    compareWithMap
 
   }
 
   def checkSum(resultOfChecker : List[Int]): Boolean = {
 
-    val reverseNumber = resultOfChecker.reverse
+    val reverseListOfNumbers = resultOfChecker.reverse
+    val reverseListWithIndexSum = reverseListOfNumbers.zipWithIndex.map(x => x._1*(x._2 + 1)).sum
+    val mod11remainder = reverseListWithIndexSum % 11 == 0
+    println(mod11remainder)
+    mod11remainder
 
-
-    val reverseListWithIndex = reverseNumber.zipWithIndex.map(x => x._1*(x._2 + 1)).sum
-    val mod =reverseListWithIndex % 11 == 0
-
-
-    println(mod)
-
-    mod
   }
 
   def start(){
@@ -81,9 +85,7 @@ object BankOCR extends App {
     val numCheck = numberChecker(" _     _  _  _  _  _  _  _ " +
                                  " _||_||_ |_||_| _||_||_ |_ " +
                                  " _|  | _||_||_||_ |_||_| _|")
-
     checkSum(numCheck)
-
   }
   start()
 
