@@ -46,8 +46,14 @@ class BankOCRSpec extends WordSpec with MustMatchers {
                      "  ||_  _|  | _||_|  ||_| _|") mustEqual List("1", "2", "3", "4", "5", "6", "7", "8", "9")
     }
 
-    "throw new illegalArgumentException if string is not correct format" in {
+    "replace character from account number with a '?' if character contains an illegible pipe or underscore" in{
 
+      BankOCR.numberChecker("    _ " +
+                            "  | _?" +
+                            "  ||_ ") mustEqual List("1","?")
+    }
+
+    "throw new illegalArgumentException if string is not correct format" in {
       val num = "    _  _     _  _  _  _  _ " +
                 "  | _| _||_||_ |_   ||_||_|" +
                 "  ||_    | _||_|  ||_| _|"
@@ -60,7 +66,6 @@ class BankOCRSpec extends WordSpec with MustMatchers {
     "return list if 9 digit account number is modulos of 11" in {
       BankOCR
       .checkSum(List("3", "4", "5", "8", "8", "2", "8", "6", "5")) mustEqual "345882865"
-
     }
     "return list with ILL indicator if account number has illegible characters" in {
       BankOCR
@@ -71,5 +76,6 @@ class BankOCRSpec extends WordSpec with MustMatchers {
         BankOCR
         .checkSum(List("3", "4", "5", "8", "8", "2", "8", "6", "6")) mustEqual "345882866 ERR"
       }
+
   }
 }
